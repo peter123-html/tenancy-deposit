@@ -1,214 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tenancy Deposit Scheme</title>
-    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/babel-standalone@6.26.0/babel.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Irish Tenancy Platform</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-100">
-    <div id="root"></div>
-    <script type="text/babel">
-        function Header() {
-            return (
-                <header class="bg-blue-600 text-white p-4">
-                    <h1 class="text-2xl font-bold">Tenancy Deposit Scheme</h1>
-                    <nav class="mt-2">
-                        <a href="#home" class="mr-4 hover:underline">Home</a>
-                        <a href="#check-deposit" class="mr-4 hover:underline">Check Deposit</a>
-                        <a href="#login" class="mr-4 hover:underline">Login</a>
-                        <a href="#about" class="hover:underline">About</a>
-                    </nav>
-                </header>
-            );
-        }
-
-        function DepositChecker() {
-            const [formData, setFormData] = React.useState({
-                tenancyAddress: '',
-                postcode: '',
-                depositAmount: '',
-                tenancyStartDate: ''
-            });
-            const [result, setResult] = React.useState('');
-
-            const handleInputChange = (e) => {
-                const { name, value } = e.target;
-                setFormData({ ...formData, [name]: value });
-            };
-
-            const checkDeposit = () => {
-                // Simulating deposit check logic
-                if (formData.tenancyAddress && formData.postcode) {
-                    setResult(`Checking deposit for ${formData.tenancyAddress}, ${formData.postcode}...`);
-                    // In a real app, this would query a backend API
-                    setTimeout(() => {
-                        setResult('Deposit found! Protected with TDS Custodial Scheme.');
-                    }, 1000);
-                } else {
-                    setResult('Please fill in all required fields.');
-                }
-            };
-
-            return (
-                <section id="check-deposit" class="p-6 max-w-lg mx-auto bg-white rounded-lg shadow-md mt-6">
-                    <h2 class="text-xl font-semibold mb-4">Is My Deposit Protected?</h2>
-                    <div class="space-y-4">
-                        <input
-                            type="text"
-                            name="tenancyAddress"
-                            placeholder="Tenancy Address"
-                            value={formData.tenancyAddress}
-                            onChange={handleInputChange}
-                            class="w-full p-2 border rounded"
-                        />
-                        <input
-                            type="text"
-                            name="postcode"
-                            placeholder="Postcode"
-                            value={formData.postcode}
-                            onChange={handleInputChange}
-                            class="w-full p-2 border rounded"
-                        />
-                        <input
-                            type="number"
-                            name="depositAmount"
-                            placeholder="Deposit Amount (£)"
-                            value={formData.depositAmount}
-                            onChange={handleInputChange}
-                            class="w-full p-2 border rounded"
-                        />
-                        <input
-                            type="date"
-                            name="tenancyStartDate"
-                            value={formData.tenancyStartDate}
-                            onChange={handleInputChange}
-                            class="w-full p-2 border rounded"
-                        />
-                        <button
-                            onClick={checkDeposit}
-                            class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-                        >
-                            Check Deposit
-                        </button>
-                        {result && <p class="mt-4 text-center">{result}</p>}
-                    </div>
-                </section>
-            );
-        }
-
-        function Login() {
-            const [loginData, setLoginData] = React.useState({
-                username: '',
-                password: ''
-            });
-            const [message, setMessage] = React.useState('');
-
-            const handleInputChange = (e) => {
-                const { name, value } = e.target;
-                setLoginData({ ...loginData, [name]: value });
-            };
-
-            const handleLogin = () => {
-                // Simulating login logic
-                if (loginData.username && loginData.password) {
-                    setMessage(`Logging in as ${loginData.username}...`);
-                    // In a real app, this would authenticate with a backend
-                    setTimeout(() => {
-                        setMessage('Login successful! Redirecting to dashboard...');
-                    }, 1000);
-                } else {
-                    setMessage('Please enter both username and password.');
-                }
-            };
-
-            return (
-                <section id="login" class="p-6 max-w-lg mx-auto bg-white rounded-lg shadow-md mt-6">
-                    <h2 class="text-xl font-semibold mb-4">Login to Your Account</h2>
-                    <div class="space-y-4">
-                        <input
-                            type="text"
-                            name="username"
-                            placeholder="Username or Email"
-                            value={loginData.username}
-                            onChange={handleInputChange}
-                            class="w-full p-2 border rounded"
-                        />
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="Password"
-                            value={loginData.password}
-                            onChange={handleInputChange}
-                            class="w-full p-2 border rounded"
-                        />
-                        <button
-                            onClick={handleLogin}
-                            class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-                        >
-                            Login
-                        </button>
-                        {message && <p class="mt-4 text-center">{message}</p>}
-                        <p class="text-center">
-                            <a href="#forgot-password" class="text-blue-600 hover:underline">
-                                Forgotten Password?
-                            </a>
-                        </p>
-                    </div>
-                </section>
-            );
-        }
-
-        function About() {
-            return (
-                <section id="about" class="p-6 max-w-3xl mx-auto bg-white rounded-lg shadow-md mt-6">
-                    <h2 class="text-xl font-semibold mb-4">About Our Scheme</h2>
-                    <p>
-                        We are a government-approved tenancy deposit protection scheme, ensuring tenants' deposits are secure and fairly managed. Choose between our Custodial Scheme (we hold the deposit) or Insured Scheme (you hold the deposit). Our services include:
-                    </p>
-                    <ul class="list-disc pl-6 mt-2">
-                        <li>Free custodial deposit protection</li>
-                        <li>Insured protection for landlords and agents</li>
-                        <li>Free, impartial dispute resolution services</li>
-                        <li>Easy-to-use online portal for managing tenancies</li>
-                    </ul>
-                    <p class="mt-4">
-                        Established in 2003, we are the longest-serving, not-for-profit scheme in the UK, protecting over £2 billion in deposits.[](https://www.nrla.org.uk/services/deposit-protection/tds)
-                    </p>
-                </section>
-            );
-        }
-
-        function App() {
-            return (
-                <div>
-                    <Header />
-                    <main class="container mx-auto">
-                        <section id="home" class="p-6 text-center">
-                            <h2 class="text-3xl font-bold mb-4">Welcome to the Tenancy Deposit Scheme</h2>
-                            <p class="text-lg">
-                                Protect your tenancy deposits with our government-approved scheme. Check if your deposit is protected, log in to manage your account, or learn more about our services.
-                            </p>
-                        </section>
-                        <DepositChecker />
-                        <Login />
-                        <About />
-                    </main>
-                    <footer class="bg-blue-600 text-white p-4 text-center mt-6">
-                        <p>&copy; 2025 Tenancy Deposit Scheme. All rights reserved.</p>
-                        <p>
-                            <a href="#terms" class="hover:underline">Terms & Conditions</a> | 
-                            <a href="#privacy" class="hover:underline">Privacy Policy</a>
-                        </p>
-                    </footer>
-                </div>
-            );
-        }
-
-        ReactDOM.render(<App />, document.getElementById('root'));
-    </script>
+<body>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/register">Register</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section id="home">
+      <h1>Irish Tenancy Platform</h1>
+      <p>Manage your rental deposit securely, in line with RTB guidelines.</p>
+      <a href="/login" class="button">Get Started</a>
+    </section>
+  </main>
+  <script src="script.js"></script>
 </body>
 </html>
